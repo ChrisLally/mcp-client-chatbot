@@ -82,7 +82,16 @@ export class MCPClient {
         transport = new StdioClientTransport({
           command: config.command,
           args: config.args,
-          env: config.env,
+          // Merge process.env with config.env, ensuring PATH is preserved and filtering out undefined values
+          env: Object.entries({ ...process.env, ...config.env }).reduce(
+            (acc, [key, value]) => {
+              if (value !== undefined) {
+                acc[key] = value;
+              }
+              return acc;
+            },
+            {} as Record<string, string>,
+          ),
           cwd: process.cwd(),
         });
       } else if (isMaybeSseConfig(this.serverConfig)) {
