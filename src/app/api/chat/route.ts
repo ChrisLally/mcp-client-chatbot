@@ -20,7 +20,7 @@ import { ChatMessageAnnotation } from "app-types/chat";
 
 const { insertMessage, insertThread, selectThread } = chatService;
 
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 const filterToolsByMentions = (
   mentions: string[],
